@@ -2,34 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c26f9d7-e838-466d-8d9c-ae9a7b199098" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Account.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Concepto.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ConceptoController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/MovementController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/PurchaseController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Movement.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Purchase.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/AccountFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/ConceptoFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/MovementFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/factories/PurchaseFactory.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_001631_create_conceptos_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_001851_create_accounts_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_002017_create_purchases_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_002109_create_movements_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/AccountSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/ConceptoSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/MovementSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/PurchaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Edgar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Edgar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PurchaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PurchaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Purchase.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Purchase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_06_002017_create_purchases_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_002017_create_purchases_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/legend.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/legend.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -198,7 +177,7 @@
       <workItem from="1614720129265" duration="10573000" />
       <workItem from="1614749611839" duration="3667000" />
       <workItem from="1614796373313" duration="64860000" />
-      <workItem from="1614954262950" duration="51415000" />
+      <workItem from="1614954262950" duration="57303000" />
     </task>
     <servers />
   </component>

@@ -71,6 +71,15 @@ class ProductController extends Controller
      * @param \App\Category $product
      * @return \Illuminate\Http\Response
      */
+    public function myProducts()
+    {
+        $products = Product::all()->where('user_id', auth()->id())->flatten();
+        return $products->count() ?
+            response()->json(['response' => ['data' => $products, 'message' => 'Your products delivered.'], 'error' => null, 'status' => 200], 200) :
+            response()->json(['response' => ['data' => null, 'message' => 'You have no products'], 'error' => null, 'status' => 200], 200);
+
+    }
+
     public function update(Request $request, $product)
     {
         $toUpdate = Product::find($product);

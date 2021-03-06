@@ -199,6 +199,12 @@
                     <td></td>
                 </tr>
                 <tr>
+                    <td>api/my_product</td>
+                    <td>GET|HEAD</td>
+                    <td>Returns all your products</td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
                     <td>api/product/{product_id}</td>
                     <td>PUT|PATCH</td>
                     <td>Updates a product</td>
@@ -310,6 +316,33 @@
                     <td>api/account/{account_id}</td>
                     <td>DELETE</td>
                     <td>Cancel an account</td>
+                    <td>[X]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="ibox">
+        <div class="ibox-content">
+
+            <table class="table table-bordered table-hover table-light col-12">
+                <thead>
+                <tr>
+                    <th colspan="4" class="text-center alert-dark text-uppercase">Purchase resources</th>
+                </tr>
+                <tr>
+                    <th>URI</th>
+                    <th>METHOD</th>
+                    <th>DESCRIPTION</th>
+                    <th>TOKEN</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>api/purchase</td>
+                    <td>POST</td>
+                    <td>Commit a purchase</td>
                     <td>[X]</td>
                 </tr>
                 </tbody>

@@ -26,8 +26,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('/user', 'UserController')->except(['index','destroy','store']);
     Route::apiResource('/category', 'CategoryController')->except('show');
     Route::apiResource('/product', 'ProductController')->except('index');
+    Route::get('/my_product','ProductController@myProducts');
     Route::apiResource('/concept','ConceptoController');
     Route::apiResource('/account','AccountController');
+    Route::post('/purchase','PurchaseController@store');
     Route::post('/logout','UserController@logout');
 });
 

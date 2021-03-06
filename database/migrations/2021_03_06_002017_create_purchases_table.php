@@ -19,7 +19,7 @@ class CreatePurchasesTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity')->default(1);
             $table->float('total');
-            $table->dateTime('date')->default(now());
+            $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
