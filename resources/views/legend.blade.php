@@ -74,11 +74,27 @@
 
                 <tbody>
                 <tr>
-                    <td><a href="/api/user">api/user</a></td>
+                    <td><a href="{{url('/api/user')}}">api/user</a></td>
                     <td>GET|HEAD</td>
                     <td>Returns all users</td>
                     <td></td>
 
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-center">
+                        <section>
+                            <code>{"response"=>["data"=>[</code>
+                            <small>
+                                @foreach($users as $user)
+                                    {{($user)}}<br/>
+                                @endforeach
+                            </small>
+                            <code>],"message"=>"Resolving all users."],"error": null,
+                                "status": 200
+                                }</code>
+
+                        </section>
+                    </td>
                 </tr>
                 <tr>
                     <td>api/user</td>
@@ -100,6 +116,7 @@
                     <td>Updates profile</td>
                     <td>[X]</td>
                 </tr>
+
 
                 </tbody>
             </table>
@@ -203,6 +220,103 @@
             </table>
         </div>
     </div>
+
+    <div class="ibox">
+        <div class="ibox-content">
+
+            <table class="table table-bordered table-hover table-light col-12">
+                <thead>
+                <tr>
+                    <th colspan="4" class="text-center alert-dark text-uppercase">Concept resources</th>
+                </tr>
+                <tr>
+                    <th>URI</th>
+                    <th>METHOD</th>
+                    <th>DESCRIPTION</th>
+                    <th>TOKEN</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>api/concept</td>
+                    <td>POST</td>
+                    <td>Store new concept</td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
+                    <td>api/concept</td>
+                    <td>GET|HEAD</td>
+                    <td>Returns all concepts</td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
+                    <td>api/concept/{concept_id}</td>
+                    <td>PUT|PATCH</td>
+                    <td>Updates a concept</td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
+                    <td>api/concept/{concept_id}</td>
+                    <td>DELETE</td>
+                    <td>Destroy a concept</td>
+                    <td>[X]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="ibox">
+        <div class="ibox-content">
+
+            <table class="table table-bordered table-hover table-light col-12">
+                <thead>
+                <tr>
+                    <th colspan="4" class="text-center alert-dark text-uppercase">Account resources</th>
+                </tr>
+                <tr>
+                    <th>URI</th>
+                    <th>METHOD</th>
+                    <th>DESCRIPTION</th>
+                    <th>TOKEN</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>api/account</td>
+                    <td>POST</td>
+                    <td>Store new account</td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
+                    <td>api/account</td>
+                    <td>GET|HEAD</td>
+                    <td>Returns all user's accounts</td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
+                    <td>api/account/{account_id}</td>
+                    <td>PUT|PATCH</td>
+                    <td>Updates an account</td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
+                    <td>api/account/{account_id}</td>
+                    <td>GET|HEAD</td>
+                    <td>Returns all account's movements</td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
+                    <td>api/account/{account_id}</td>
+                    <td>DELETE</td>
+                    <td>Cancel an account</td>
+                    <td>[X]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 <div class="social-footer">
     <div class="ibox-title">

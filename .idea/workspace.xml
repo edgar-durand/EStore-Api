@@ -1,7 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c26f9d7-e838-466d-8d9c-ae9a7b199098" name="Default Changelist" comment="" />
+    <list default="true" id="4c26f9d7-e838-466d-8d9c-ae9a7b199098" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Account.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Concepto.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ConceptoController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/MovementController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/PurchaseController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Movement.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Purchase.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/AccountFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/ConceptoFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/MovementFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/PurchaseFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_001631_create_conceptos_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_001851_create_accounts_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_002017_create_purchases_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2021_03_06_002109_create_movements_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeds/AccountSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeds/ConceptoSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeds/MovementSeeder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeds/PurchaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Edgar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Edgar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/legend.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/legend.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +42,9 @@
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.2">
     <include_path>
@@ -120,7 +152,12 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1pDaU803DfrFGaNfB1uUZeX9c0j" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../miproyecto" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -161,11 +198,25 @@
       <workItem from="1614720129265" duration="10573000" />
       <workItem from="1614749611839" duration="3667000" />
       <workItem from="1614796373313" duration="64860000" />
-      <workItem from="1614954262950" duration="22981000" />
+      <workItem from="1614954262950" duration="51415000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

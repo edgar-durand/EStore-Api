@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -9,11 +10,13 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome')->with('name',$name);
 //});
 Route::get('/api' ,function (){
-    return view('index');
+    $users = User::all(['id','username','First_name','last_name','email'])->splice(0,5);
+    return view('index',['users'=>$users]);
 });
 
 Route::get('/' ,function (){
-    return view('index');
+    $users = User::all(['id','username','First_name','last_name','email'])->splice(0,5);
+    return view('index',['users'=>$users]);
 });
 
 

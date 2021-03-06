@@ -21,10 +21,13 @@ Route::post('/user','UserController@store');
 Route::get('/user','UserController@index');
 Route::get('/product','ProductController@index');
 
+
 Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('/user', 'UserController')->except(['index','destroy','store']);
     Route::apiResource('/category', 'CategoryController')->except('show');
     Route::apiResource('/product', 'ProductController')->except('index');
+    Route::apiResource('/concept','ConceptoController');
+    Route::apiResource('/account','AccountController');
     Route::post('/logout','UserController@logout');
 });
 
