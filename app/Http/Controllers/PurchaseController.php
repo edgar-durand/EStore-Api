@@ -29,8 +29,26 @@ class PurchaseController extends Controller
                 ]);
 
                 $updatedProduct = Product::find($product['product_id']);
-                $updatedProduct->inStock += $product['quantity'];
-                $updatedProduct->save();
+
+                $inMyList = Product::all()
+                    ->where('user_id', auth()->id())
+                    ->where('id',$product['product_id'])
+                    ->flatten();
+                if ($inMyList->count()){
+                    $updatedProduct->inStock += $product['quantity'];
+                    $updatedProduct->save();
+                }else{
+                    Product::create([
+                       'user_id'=>auth()->id(),
+                       'category_id'=>$updatedProduct->category_id,
+                       'name'=>$updatedProduct->name,
+                       'image'=>$updatedProduct->image,
+                       'description'=>$updatedProduct->description,
+                       'price_cost'=>$updatedProduct->price_cost,
+                       'inStock'=> $product['quantity']
+                    ]);
+                }
+
             }
 
             Movement::create([

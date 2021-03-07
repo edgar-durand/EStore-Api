@@ -104,9 +104,9 @@
 
                 </tr>
                 <tr>
-                    <td>api/user/{user_id}</td>
+                    <td>api/profile</td>
                     <td>GET|HEAD</td>
-                    <td>Show required user profile</td>
+                    <td>Show current user profile</td>
                     <td>[X]</td>
 
                 </tr>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,8 @@ class CreateCategoriesTable extends Migration
             $table->string('description')->nullable();
             $table->timestamps();
         });
+
+        factory(Category::class)->times(5)->create();
     }
 
     /**

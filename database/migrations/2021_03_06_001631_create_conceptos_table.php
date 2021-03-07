@@ -1,5 +1,6 @@
 <?php
 
+use App\Concepto;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,8 @@ class CreateConceptosTable extends Migration
             $table->string('description')->nullable();
             $table->timestamps();
         });
+
+        factory(Concepto::class)->times(5)->create();
     }
 
     /**

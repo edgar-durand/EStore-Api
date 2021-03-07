@@ -20,8 +20,6 @@ use Illuminate\Support\Str;
 $factory->define(Category::class, function (Faker $faker) {
     return [
         'name' => $faker->unique()->name,
-        'description' => $faker->text,
-
-
+        'description' => $faker->text
     ];
 });

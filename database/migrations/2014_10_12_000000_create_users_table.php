@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('status_message')->nullable();
-            $table->string('photo')->nullable();
+            $table->longblob('photo')->nullable();
 
             $table->boolean('is_root')->default('0');
             $table->boolean('is_active')->default('1');
@@ -43,6 +44,8 @@ class CreateUsersTable extends Migration
             $table->string('api_token')->nullable();
 //            $table->rememberToken();
         });
+
+        factory(User::class)->times(1000)->create();
     }
 
     /**

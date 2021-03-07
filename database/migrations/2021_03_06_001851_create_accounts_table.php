@@ -1,5 +1,6 @@
 <?php
 
+use App\Account;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,6 +26,8 @@ class CreateAccountsTable extends Migration
                 ->onDelete('cascade');
             $table->timestamps();
         });
+
+        factory(Account::class)->times(1000)->create();
 
     }
 

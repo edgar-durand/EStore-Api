@@ -58,12 +58,9 @@ class UserController extends Controller
     }
 
 
-    public function show($id)
+    public function show()
     {
-        $user = User::find($id);
-        return $user ?
-            response()->json(['response' => ['data' => $user, 'message' => 'Resolving profile for users ID: ' . $id . ''], 'error' => null, 'status' => 200], 200) :
-            response()->json(['response' => null, 'error' => ['message' => 'ID ' . $id . ' No Found !'], 'status' => 404], 404);
+        return response()->json(['response' => ['data' => User::find(auth()->id()), 'message' => 'Resolving profile for users ID: ' . auth()->id() . ''], 'error' => null, 'status' => 200], 200);
     }
 
 

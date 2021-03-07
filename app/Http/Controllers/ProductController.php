@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -28,13 +29,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->name && $request->user_id && $request->category_id && $request->price_cost) {
+        if ($request->name && $request->category_id && $request->price_cost) {
             $name = Product::whereName($request->name)->where('price_cost', $request->price_cost)->first();
             if ($name) {
                 return response()->json(['response' => null, 'error' => ['message' => 'This Product name and Price already exist !'], 'status' => 422], 422);
             } else {
                 Product::create([
-                    'user_id' => $request->user_id,
+                    'user_id' => auth()->id(),
                     'category_id' => $request->category_id,
                     'name' => $request->name,
                     'image' => $request->image,
@@ -42,8 +43,17 @@ class ProductController extends Controller
                     'price_cost' => $request->price_cost,
                     'inStock' => $request->inStock,
                     '_public' => $request->_public
-                ])->withTimeStamp();
-                return response()->json(['response' => ['data' => null, 'message' => 'created !'], 'error' => null, 'status' => 201], 201);
+                ]);
+                $newProduct = Product::whereName($request->name)->where('price_cost', $request->price_cost)->first();
+                $category = Category::find($request->category_id)->first();
+                return response()->json(['response' => ['data' => ['name' => $newProduct->name,
+                    'description' => $newProduct->description,
+                    'id' => $newProduct->id,
+                    'image' => $newProduct->image,
+                    'inStock' => $newProduct->inStock,
+                    'price_cost' => $newProduct->price_cost,
+                    '_public' => $newProduct->_public,
+                    'category' => $category->name], 'message' => 'created !'], 'error' => null, 'status' => 201], 201);
             }
         }
         return response()->json(['response' => null, 'error' => ['message' => 'Data is invalid or null !'], 'status' => 422], 422);
@@ -56,12 +66,23 @@ class ProductController extends Controller
      * @param \App\Category $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($product)
     {
-        $product = Product::find($id);
+        $showProduct = Product::find($product);
+        $category = Category::find($showProduct->category_id)->first();
+        $showing[] = array(
+            'name' => $showProduct->name,
+            'description' => $showProduct->description,
+            'id' => $showProduct->id,
+            'image' => $showProduct->image,
+            'inStock' => $showProduct->inStock,
+            'price_cost' => $showProduct->price_cost,
+            '_public' => $showProduct->_public,
+            'category' => $category->name
+        );
         return $product ?
-            response()->json(['response' => ['data' => $product, 'message' => 'Resolving product for ID: ' . $id . ''], 'error' => null, 'status' => 200], 200) :
-            response()->json(['response' => null, 'error' => ['message' => 'ID ' . $id . ' No Found !'], 'status' => 404], 404);
+            response()->json(['response' => ['data' => $showing, 'message' => 'Resolving product for ID: ' . $product . ''], 'error' => null, 'status' => 200], 200) :
+            response()->json(['response' => null, 'error' => ['message' => 'ID ' . $product . ' No Found !'], 'status' => 404], 404);
     }
 
     /**
@@ -73,9 +94,24 @@ class ProductController extends Controller
      */
     public function myProducts()
     {
+        $showing = [];
         $products = Product::all()->where('user_id', auth()->id())->flatten();
+        foreach ($products as $product){
+            $category = Category::find($product->category_id)->first();
+            $showing[] = array(
+                'name' => $product->name,
+                'description' => $product->description,
+                'id' => $product->id,
+                'image' => $product->image,
+                'inStock' => $product->inStock,
+                'price_cost' => $product->price_cost,
+                '_public' => $product->_public,
+                'category' => $category->name
+            );
+        }
+
         return $products->count() ?
-            response()->json(['response' => ['data' => $products, 'message' => 'Your products delivered.'], 'error' => null, 'status' => 200], 200) :
+            response()->json(['response' => ['data' => $showing, 'message' => 'Your products delivered.'], 'error' => null, 'status' => 200], 200) :
             response()->json(['response' => ['data' => null, 'message' => 'You have no products'], 'error' => null, 'status' => 200], 200);
 
     }
