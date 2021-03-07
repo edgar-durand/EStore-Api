@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('status_message')->nullable();
-            $table->longblob('photo')->nullable();
+            $table->multiLineString('photo')->nullable();
 
             $table->boolean('is_root')->default('0');
             $table->boolean('is_active')->default('1');

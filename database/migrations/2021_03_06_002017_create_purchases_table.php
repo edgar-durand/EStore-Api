@@ -17,8 +17,10 @@ class CreatePurchasesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('account_id');
             $table->integer('quantity')->default(1);
             $table->float('total');
+            $table->date('date')->default(now());
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
@@ -27,6 +29,9 @@ class CreatePurchasesTable extends Migration
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products');
+            $table->foreign('account_id')
+                ->references('id')
+                ->on('accounts');
 
         });
     }

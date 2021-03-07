@@ -345,6 +345,12 @@
                     <td>Commit a purchase</td>
                     <td>[X]</td>
                 </tr>
+                <tr>
+                    <td>api/purchase/{account_id}</td>
+                    <td>POST</td>
+                    <td>Purchase detail. Body send: <code>{"date":"YYYY-mm-dd"}</code></td>
+                    <td>[X]</td>
+                </tr>
                 </tbody>
             </table>
         </div>

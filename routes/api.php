@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('/concept','ConceptoController');
     Route::apiResource('/account','AccountController');
     Route::post('/purchase','PurchaseController@store');
+    Route::post('/purchase/{account_id}','PurchaseController@show');
     Route::post('/logout','UserController@logout');
 });
 
