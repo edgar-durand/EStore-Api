@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->multiLineString('image')->nullable();
+            $table->text('image')->nullable();
             $table->string('description')->nullable();
             $table->float('price_cost');
             $table->integer('inStock')->default(0);

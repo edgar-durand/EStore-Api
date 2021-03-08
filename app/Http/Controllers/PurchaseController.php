@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Movement;
 use App\Product;
 use App\Purchase;
+use App\User;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -18,9 +20,21 @@ class PurchaseController extends Controller
             ->where('account_id',$account_id)
             ->where('date',request('date'))->flatten();
         foreach ($purchases as $purchase){
+            $product = Product::find($purchase['product_id']);
+            $formatedProd = [
+                'category' => Category::find($product['category_id'])->name,
+                'description'=>$product['description'],
+                'id'=>$product['id'],
+                'image'=>$product['image'],
+                'name'=>$product['name'],
+                'price_cost'=>$product['price_cost'],
+                'original_owner'=>User::find($product['user_id']),
+                '_public'=>$product['_public']
+
+            ];
             $return[] = array(
                 "id" => $purchase['id'],
-                "product" => Product::find($purchase['product_id']),
+                "product" => $formatedProd,
                 "quantity" => $purchase['quantity'],
                 "total" => $purchase['total']
             );}

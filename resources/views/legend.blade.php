@@ -31,7 +31,7 @@
                 <tr>
                     <td> api/login</td>
                     <td>POST</td>
-                    <td>Login Token returns
+                    <td>Login Token returns:
                         <code>
                             {
                             "response":{
@@ -78,6 +78,13 @@
                     <td>GET|HEAD</td>
                     <td>Returns all users</td>
                     <td></td>
+
+                </tr>
+                <tr>
+                    <td>api/user/{page}/{per_page}</td>
+                    <td>GET|HEAD</td>
+                    <td>Returns users by paginated</td>
+                    <td>[X]</td>
 
                 </tr>
                 <tr>

@@ -23,7 +23,8 @@ Route::get('/product','ProductController@index');
 
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::apiResource('/user', 'UserController')->except(['index','destroy','store','show']);
+    Route::apiResource('/user', 'UserController')->except(['index','destroy','store','show','getByPage']);
+    Route::get('/user/{page}/{per_page}','UserController@getByPage');
     Route::get('/profile','UserController@show');
     Route::apiResource('/category', 'CategoryController')->except('show');
     Route::apiResource('/product', 'ProductController')->except('index');

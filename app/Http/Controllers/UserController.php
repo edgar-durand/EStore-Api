@@ -13,10 +13,58 @@ class UserController extends Controller
 
     public function index()
     {
+//         EXAMPLES:
+//        User::chunk(200, function ($flights) {
+//            foreach ($users as $user) {
+//                //
+//            }
+//        });
 
-        $users = User::all();
+
+//        $users = App\User::cursor()->filter(function ($user) {
+//            return $user->id > 500;
+//        });
+
+//        $flights = App\Flight::find([1, 2, 3]);
+
+//        $model = App\Flight::where('legs', '>', 100)->firstOr(function () {
+//            // ...
+//        });
+
+//        App\Flight::where('active', 1)
+//            ->where('destination', 'San Diego')
+//            ->update(['delayed' => 1]);
+
+//        $user->wasChanged('first_name'); // false
+
+        // Retrieve flight by name, or create it with the name, delayed, and arrival_time attributes...
+//        $flight = App\Flight::firstOrCreate(
+//            ['name' => 'Flight 10'],
+//            ['delayed' => 1, 'arrival_time' => '11:30']
+//        );
+
+        // If there's a flight from Oakland to San Diego, set the price to $99.
+// If no matching model exists, create one.
+//        $flight = App\Flight::updateOrCreate(
+//            ['departure' => 'Oakland', 'destination' => 'San Diego'],
+//            ['price' => 99, 'discounted' => 1]
+//        );
+
+
+        $users = User::all(['email']);
         return $users ?
             response()->json(['response' => ['data' => $users, 'message' => 'Resolving all users.'], 'error' => null, 'status' => 200], 200) :
+            response()->json(['response' => null, 'error' => ['message' => 'No Found !'], 'status' => 404], 404);
+    }
+
+    public function getByPage($page,$perPage)
+    {
+
+        $paginated = User::all()->forPage($page,$perPage);
+        $allResults = User::all()->count();
+        $allPages = ceil($allResults / $perPage) ;
+        return $paginated ?
+            response()->json(['response' => ['data' => ['results'=>$paginated,'all_results'=>$allResults,'all_pages'=>$allPages], 'message' => 'Resolving paginated users.'], 'error' => null, 'status' => 200], 200) :
             response()->json(['response' => null, 'error' => ['message' => 'No Found !'], 'status' => 404], 404);
     }
 
