@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -57,14 +58,44 @@ class UserController extends Controller
             response()->json(['response' => null, 'error' => ['message' => 'No Found !'], 'status' => 404], 404);
     }
 
-    public function getByPage($page,$perPage)
+    public function userId($user_id)
     {
+        $user = User::find($user_id);
+        $products = Product::all()
+            ->where('user_id', $user_id)
+            ->where('_public', true)->flatten();
+        return $user ?
+            response()->json(['response' => ['data' => ['user' => $user, 'products' => $products], 'message' => "Resolving user id: $user_id"], 'error' => null, 'status' => 200], 200) :
+            response()->json(['response' => null, 'error' => ['message' => "Id: $user_id not found in DB."], 'status' => 404], 404);
+    }
 
-        $paginated = User::all()->forPage($page,$perPage);
-        $allResults = User::all()->count();
-        $allPages = ceil($allResults / $perPage) ;
+    public function getByPage(Request $request, $perPage)
+    {
+        if ($search = trim($request->get('search'))) {
+
+            $paginated = User::from('users as u')
+                ->where(function ($query) use ($search) {
+                    $query = $query->orWhere('u.username', 'like', "%$search%");
+                    $query = $query->orWhere('u.first_name', 'like', "%$search%");
+                    $query = $query->orWhere('u.last_name', 'like', "%$search%");
+                    $query = $query->orWhere('u.email', 'like', "%$search%");
+                    $query = $query->orWhere('u.phone', 'like', "%$search%");
+                });
+            $paginated = $paginated
+                ->orderBy('last_name', 'asc')
+                ->paginate($perPage);
+//                ->forPage($page, $perPage);
+            return $paginated ?
+                response()->json(['response' => $paginated, 'error' => null, 'status' => 200], 200) :
+                response()->json(['response' => null, 'error' => ['message' => 'No Found !'], 'status' => 404], 404);
+
+        }
+
+        $paginated = User::from('users')
+            ->orderBy('last_name', 'asc')
+            ->paginate($perPage);
         return $paginated ?
-            response()->json(['response' => ['data' => ['results'=>$paginated,'all_results'=>$allResults,'all_pages'=>$allPages], 'message' => 'Resolving paginated users.'], 'error' => null, 'status' => 200], 200) :
+            response()->json(['response' => $paginated, 'error' => null, 'status' => 200], 200) :
             response()->json(['response' => null, 'error' => ['message' => 'No Found !'], 'status' => 404], 404);
     }
 
@@ -296,11 +327,13 @@ class UserController extends Controller
     public
     function destroy($id)
     {
-        $user = User::find($id);
-        if ($user) {
-            $user->delete();
-            return response()->json(['response' => ['data' => null, 'message' => 'User is been deleted !'], 'error' => null, 'status' => 200], 200);
+        if (auth()->user()->is_root === true) {
+            $user = User::find($id);
+            if ($user) {
+                $user->delete();
+                return response()->json(['response' => ['data' => null, 'message' => 'User is been deleted !'], 'error' => null, 'status' => 200], 200);
+            }
+            return response()->json(['response' => null, 'error' => ['message' => 'User ID ' . $id . ' No Found !'], 'status' => 404], 404);
         }
-        return response()->json(['response' => null, 'error' => ['message' => 'User ID ' . $id . ' No Found !'], 'status' => 404], 404);
     }
 }

@@ -76,29 +76,55 @@
                 <tr>
                     <td><a href="{{url('/api/user')}}">api/user</a></td>
                     <td>GET|HEAD</td>
-                    <td>Returns all users</td>
+                    <td>Returns all user's emails</td>
                     <td></td>
 
                 </tr>
                 <tr>
-                    <td>api/user/{page}/{per_page}</td>
+                    <td>api/user/get_by_id/{user_id}</td>
+                    <td>GET|HEAD</td>
+                    <td>Returns requested user</td>
+                    <td>[X]</td>
+
+                </tr>
+                <tr>
+                    <td>api/user/{per_page}</td>
                     <td>GET|HEAD</td>
                     <td>Returns users by paginated</td>
                     <td>[X]</td>
 
                 </tr>
                 <tr>
-                    <td colspan="4" class="text-center">
+                    <td colspan="4" class="text-justify">
                         <section>
-                            <code>{"response"=>["data"=>[</code>
-                            <small>
-                                @foreach($users as $user)
-                                    {{($user)}}<br/>
-                                @endforeach
-                            </small>
-                            <code>],"message"=>"Resolving all users."],"error": null,
-                                "status": 200
-                                }</code>
+                            @if($users->count())
+                                <code>{<br/>
+                                    "response": {<br/>
+                                    "current_page": 1,<br/>
+                                    "data":[<br/></code>
+                                <small>
+
+                                    @foreach($users as $user)
+                                        {{($user)}}<br/>
+                                    @endforeach
+                                </small>
+                                <code>],<br/>
+                                    "first_page_url": "http://{SERVER_ADDR}:{SERVER_PORT}/api/user?page=1",<br/>
+                                    "from": 1,<br/>
+                                    "last_page": 275,<br/>
+                                    "last_page_url": "http://{SERVER_ADDR}:{SERVER_PORT}/api/user?page=275",<br/>
+                                    "next_page_url": "http://{SERVER_ADDR}:{SERVER_PORT}/api/user?page=2",<br/>
+                                    "path": "http://{SERVER_ADDR}:{SERVER_PORT}/api/user",<br/>
+                                    "per_page": 20,<br/>
+                                    "prev_page_url": null,<br/>
+                                    "to": 20,<br/>
+                                    "total": 5496<br/>
+                                    },<br/>
+                                    "error": null,<br/>
+                                    "status": 200<br/>}</code>
+                            @else
+                                <h1 class="text-danger">DB connexion Error !</h1>
+                            @endif
 
                         </section>
                     </td>
@@ -200,7 +226,7 @@
                     <td>[X]</td>
                 </tr>
                 <tr>
-                    <td><a href="/api/product">api/product</a></td>
+                    <td><a href="/api/product/20">api/product/{per_page}</a></td>
                     <td>GET|HEAD</td>
                     <td>Returns all public products</td>
                     <td></td>
@@ -218,7 +244,7 @@
                     <td>[X]</td>
                 </tr>
                 <tr>
-                    <td>api/product/{product_id}</td>
+                    <td>api/product_detail/{product_id}</td>
                     <td>GET|HEAD</td>
                     <td>Show a product</td>
                     <td>[X]</td>
@@ -353,9 +379,74 @@
                     <td>[X]</td>
                 </tr>
                 <tr>
+                    <td class="align-middle">api/purchase/confirm</td>
+                    <td class="align-middle">POST</td>
+                    <td>Confirm a purchase. [Send body]:</td>
+                    <td class="align-middle">[X]</td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <code><br/>{<br/>
+                            "data":[<br/>
+                            {"id": [purchase_id], "product_id": [product_id],<br/>
+                            "user_id": [user_id], "account_id": [account_id],<br/>
+                            "movement_id": [movement_id], "quantity": [quantity], "total": [total]}, <br/>
+                            {[-other-purchase-]},...<br/>
+                            ],<br/><br/>}</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-middle">api/purchase/decline</td>
+                    <td class="align-middle">POST</td>
+                    <td>Decline a purchase. [Send body]:</td>
+                    <td class="align-middle">[X]</td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <code><br/>{<br/>
+                            "data":[<br/>
+                            {"id": [purchase_id], "product_id": [product_id],<br/>
+                            "user_id": [user_id], "account_id": [account_id],<br/>
+                            "movement_id": [movement_id], "quantity": [quantity], "total": [total]}, <br/>
+                            {[-other-decline-]},...<br/>
+                            ],<br/><br/>}</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-middle">api/purchase/get_pending</td>
+                    <td class="align-middle">GET|HEAD</td>
+                    <td>Get pending purchases.</td>
+                    <td class="align-middle">[X]</td>
+                </tr>
+                <tr>
+                    <td class="align-middle">api/purchase/get_declined</td>
+                    <td class="align-middle">GET|HEAD</td>
+                    <td>Get declined purchases.</td>
+                    <td class="align-middle">[X]</td>
+                </tr>
+                <tr>
+                    <td class="align-middle">api/purchase/get_confirmed</td>
+                    <td class="align-middle">GET|HEAD</td>
+                    <td>Get confirmed purchases.</td>
+                    <td class="align-middle">[X]</td>
+                </tr>
+                <tr>
+                    <td class="align-middle">api/purchase/get_all</td>
+                    <td class="align-middle">GET|HEAD</td>
+                    <td>Get all purchases.</td>
+                    <td class="align-middle">[X]</td>
+                </tr>
+                <tr>
                     <td>api/purchase/{account_id}</td>
                     <td>POST</td>
-                    <td>Purchase detail. Body send: <code>{"date":"YYYY-mm-dd"}</code></td>
+                    <td>Purchase detail. Body send: <code>{"movement_id":[movement_id]}</code></td>
+                    <td>[X]</td>
+                </tr>
+                <tr>
+                    <td>api/purchase/sale_request</td>
+                    <td>GET|HEAD</td>
+                    <td>Returns sales request that comes from another user to you.</td>
                     <td>[X]</td>
                 </tr>
                 </tbody>

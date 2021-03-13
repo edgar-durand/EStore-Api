@@ -13,11 +13,33 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $perPage)
     {
-        $product = Product::all()->where('_public', true);
+        if ($search = trim($request->get('search'))) {
+
+            $paginated = Product::from('products as p')
+                ->where(function ($query) use ($search){
+                    $query = $query->orWhere('p.name','like', "%$search%");
+                    $query = $query->orWhere('p.description','like', "%$search%");
+                    $query = $query->orWhere('p.price_cost','like', "%$search%");
+                    $query = $query->orWhere('p.sales_price','like', "%$search%");
+                })
+                ->where('_public', true);
+            $paginated = $paginated
+                ->orderBy('name', 'asc')
+                ->paginate($perPage);
+//                ->forPage($page, $perPage);
+            return $paginated ?
+                response()->json(['response' =>  $paginated, 'error' => null, 'status' => 200], 200) :
+                response()->json(['response' => null, 'error' => ['message' => 'No Found !'], 'status' => 404], 404);
+
+        }
+        $product = Product::from('products')
+            ->where('_public', true)
+            ->orderBy('name', 'asc')
+            ->paginate($perPage);
         return $product->count() ?
-            response()->json(['response' => ['data' => $product, 'message' => 'Resolving all products.'], 'status' => 200, 'error' => null], 200) :
+            response()->json(['response' => $product, 'status' => 200, 'error' => null], 200) :
             response()->json(['response' => ['data' => null, 'message' => 'No Products stored.'], 'status' => 200, 'error' => null], 200);
     }
 
@@ -29,22 +51,24 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $newProduct = null;
         if ($request->name && $request->category_id && $request->price_cost) {
-            $name = Product::whereName($request->name)->where('price_cost', $request->price_cost)->first();
+            $name = Product::whereName($request->name)->where('sales_price', $request->price_cost)->first();
             if ($name) {
-                return response()->json(['response' => null, 'error' => ['message' => 'This Product name and Price already exist !'], 'status' => 422], 422);
+                return response()->json(['response' => null, 'error' => ['message' => 'This Product name and Sales Price already exist !'], 'status' => 422], 422);
             } else {
-                Product::create([
+                $newProduct = Product::create([
                     'user_id' => auth()->id(),
                     'category_id' => $request->category_id,
                     'name' => $request->name,
                     'image' => $request->image,
                     'description' => $request->description,
                     'price_cost' => $request->price_cost,
+                    'sales_price' => $request->sales_price,
                     'inStock' => $request->inStock,
                     '_public' => $request->_public
                 ]);
-                $newProduct = Product::whereName($request->name)->where('price_cost', $request->price_cost)->first();
+                $newProduct->save();
                 $category = Category::find($request->category_id)->first();
                 return response()->json(['response' => ['data' => ['name' => $newProduct->name,
                     'description' => $newProduct->description,
@@ -52,6 +76,7 @@ class ProductController extends Controller
                     'image' => $newProduct->image,
                     'inStock' => $newProduct->inStock,
                     'price_cost' => $newProduct->price_cost,
+                    'sales_price' => $newProduct->sales_price,
                     '_public' => $newProduct->_public,
                     'category' => $category->name], 'message' => 'created !'], 'error' => null, 'status' => 201], 201);
             }
@@ -69,17 +94,18 @@ class ProductController extends Controller
     public function show($product)
     {
         $showProduct = Product::find($product);
-        $category = Category::find($showProduct->category_id)->first();
-        $showing[] = array(
+        $category = Category::find($showProduct->category_id);
+        $showing= [
             'name' => $showProduct->name,
             'description' => $showProduct->description,
             'id' => $showProduct->id,
             'image' => $showProduct->image,
             'inStock' => $showProduct->inStock,
             'price_cost' => $showProduct->price_cost,
+            'sales_price' => $showProduct->sales_price,
             '_public' => $showProduct->_public,
             'category' => $category->name
-        );
+        ];
         return $product ?
             response()->json(['response' => ['data' => $showing, 'message' => 'Resolving product for ID: ' . $product . ''], 'error' => null, 'status' => 200], 200) :
             response()->json(['response' => null, 'error' => ['message' => 'ID ' . $product . ' No Found !'], 'status' => 404], 404);
@@ -105,6 +131,7 @@ class ProductController extends Controller
                 'image' => $product->image,
                 'inStock' => $product->inStock,
                 'price_cost' => $product->price_cost,
+                'sales_price' => $product->sales_price,
                 '_public' => $product->_public,
                 'category' => $category->name
             );
@@ -126,6 +153,7 @@ class ProductController extends Controller
                     $toUpdate->category_id = $request->category_id;
                     $toUpdate->image = $request->image;
                     $toUpdate->price_cost = $request->price_cost;
+                    $toUpdate->sales_price = $request->sales_price;
                     $toUpdate->inStock = $request->inStock;
                     $toUpdate->_public = $request->_public;
                     $toUpdate->name = $request->name;
@@ -152,6 +180,11 @@ class ProductController extends Controller
                         $flag = true;
                         $columns[] = array('price_cost');
                         $toUpdate->price_cost = $request->price_cost;
+                    }
+                    if ($request->sales_price) {
+                        $flag = true;
+                        $columns[] = array('sales_price');
+                        $toUpdate->sales_price = $request->sales_price;
                     }
                     if ($request->image) {
                         $flag = true;

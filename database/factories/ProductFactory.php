@@ -24,6 +24,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'category_id' => $faker->numberBetween(1,Category::all()->count()),
         'user_id' => $faker->numberBetween(1,User::all()->count()),
         'price_cost' => $faker->randomFloat(2,1,4),
+        'sales_price' => $faker->numberBetween(3,10)*$faker->randomFloat(1,1,2),
         '_public'=>$faker->boolean,
         'inStock' => $faker->randomNumber(2),
         'description' => $faker->text

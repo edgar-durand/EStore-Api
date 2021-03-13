@@ -21,7 +21,26 @@ class CreateConceptosTable extends Migration
             $table->timestamps();
         });
 
-        factory(Concepto::class)->times(5)->create();
+        Concepto::create([
+           'name'=>'OPEN ACCOUNT',
+           'description'=> 'NEW ACCOUNT'
+        ]);
+        Concepto::create([
+            'name'=>'PURCHASE',
+            'description'=> 'NEW PURCHASE'
+        ]);
+        Concepto::create([
+            'name'=>'SALE',
+            'description'=> 'NEW SALE'
+        ]);
+        Concepto::create([
+            'name'=>'TRANSFER',
+            'description'=> 'MONEY TRANSFER'
+        ]);
+        Concepto::create([
+            'name'=>'OTHER',
+            'description'=> 'UNKNOWN'
+        ]);
     }
 
     /**

@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->text('image')->nullable();
             $table->string('description')->nullable();
             $table->float('price_cost');
+            $table->float('sales_price');
             $table->integer('inStock')->default(0);
             $table->boolean('_public')->default(true);
             $table->foreign('user_id')

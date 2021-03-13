@@ -18,10 +18,14 @@ class CreatePurchasesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('account_id');
-            $table->integer('quantity')->default(1);
+            $table->unsignedBigInteger('movement_id');
             $table->float('total');
-            $table->date('date')->default(now());
+            $table->boolean('confirmed')->nullable();
             $table->timestamps();
+            $table->foreign('movement_id')
+                ->references('id')
+                ->on('movements')
+                ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

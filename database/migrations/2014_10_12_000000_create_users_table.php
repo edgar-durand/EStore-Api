@@ -44,7 +44,13 @@ class CreateUsersTable extends Migration
             $table->string('api_token')->nullable();
 //            $table->rememberToken();
         });
-
+        User::create([
+            'username' => 'edgar',
+            'email' => 'edgar@nauta.cu',
+            'first_name'=>'Edgar',
+            'last_name'=>'Durand Diaz',
+            'password' => '$2y$10$EMNGt/PaCGwUVoh1ZJUhJOE1H.6aymd8DJ0.97WbcQWpzjeQcaeBC'
+        ]);
         factory(User::class)->times(1000)->create();
     }
 

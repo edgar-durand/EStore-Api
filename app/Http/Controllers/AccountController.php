@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\Concepto;
 use App\Movement;
+use App\Purchase;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -29,8 +30,20 @@ class AccountController extends Controller
                 $movements = Movement::all()
                     ->where('account_id', $account->id);
 
-                foreach ($movements as $amount)
-                    $total += $amount->amount;
+                foreach ($movements as $movement) {
+//                    if ($movement->concepto_id === 1 || $movement->concepto_id === 3)
+                        $total += $movement->amount;
+//                    if ($movement->concepto_id === 2) {
+//                        $purchases = Purchase::all()
+//                            ->where('account_id', $movement['account_id'])
+//                            ->where('movement_id', $movement['id']);
+//
+//                        foreach ($purchases as $purchase)
+//                            if ($purchase->confirmed === 1 || $purchase->confirmed === null)
+//                                $total += $purchase->total * -1;
+//                    }
+
+                }
 
                 $myAccounts[] = array(
                     'id' => $account->id,
@@ -99,13 +112,66 @@ class AccountController extends Controller
         $record = [];
         foreach ($movements as $movement) {
             $concept = Concepto::find($movement->concepto_id);
-            $record[] = array(
-                'movement_id' => $movement->id,
-                'concept' => $concept->name,
-                'amount' => $movement->amount,
-                'date' => $movement->created_at
+            switch ($concept->id) {
+                case 1 :
+                    {
+                        $record[] = array(
+                            'movement_id' => $movement->id,
+                            'concept' => $concept->name,
+                            'amount' => $movement->amount,
+                            'date' => $movement->created_at
+                        );
+                    }
+                    break;
+                case 2:
+                    {
 
-            );
+                        $purchases = Purchase::all()
+                            ->where('account_id', $movement['account_id'])
+                            ->where('movement_id', $movement['id']);
+                        $amount = 0;
+                        $confirmed = 0;
+                        $declined = 0;
+                        $pending = 0;
+                        foreach ($purchases as $purchase) {
+
+                            if ($purchase->confirmed === 1) {
+                                $confirmed++;
+                                $amount += $purchase->total;
+                            }
+                            if ($purchase->confirmed === 0) {
+                                $declined++;
+                            }
+                            if ($purchase->confirmed === null) {
+                                $pending++;
+                                $amount += $purchase->total;
+                            }
+                        }
+                        $record[] = array(
+                            'movement_id' => $movement->id,
+                            'concept' => $concept->name,
+                            'amount' => $amount * -1,
+                            'confirmed' => $confirmed,
+                            'declined' => $declined,
+                            'pending' => $pending,
+                            'date' => $movement->created_at
+                        );
+                    }
+                    break;
+                case 3 :
+                    {
+                        $record[] = array(
+                            'concept' => $concept->name,
+                            'movement_id' => $movement->id,
+                            'amount' => $movement->amount,
+                            'date' => $movement->created_at
+                        );
+                    }
+                    break;
+
+            }
+
+
         }
 
         return $movements->count() ?
@@ -155,7 +221,7 @@ class AccountController extends Controller
                     return response()->json(['response' => ['data' => $columns, 'message' => 'Updated !'], 'error' => null, 'status' => 201], 201);
                 }
 
-                return response()->json(['response' => ['data'=>null,'message'=>'No data to be updated'], 'error' => null, 'status' => 200], 200);
+                return response()->json(['response' => ['data' => null, 'message' => 'No data to be updated'], 'error' => null, 'status' => 200], 200);
             }
         }
         return response()->json(['response' => null, 'error' => ['message' => 'Account ID: ' . $account . ' Not Found.'], 'status' => 404], 404);
@@ -172,21 +238,21 @@ class AccountController extends Controller
     public function destroy($account)
     {
         $toDestroy = Account::find($account);
-        if ($toDestroy){
-            if ($toDestroy->user_id == auth()->id()){
-                if ($toDestroy->active){
-                    $movements = Movement::all()->where('account_id',$toDestroy->id);
+        if ($toDestroy) {
+            if ($toDestroy->user_id == auth()->id()) {
+                if ($toDestroy->active) {
+                    $movements = Movement::all()->where('account_id', $toDestroy->id);
                     $total = 0;
-                    foreach ($movements as $movement){
+                    foreach ($movements as $movement) {
                         $total += $movement->amount;
                     }
-                    if ($total>0){
-                        return response()->json(['response' => null, 'error' => ['message' => 'Account ID: ' . $account . ' is not empty. You need to transfer '.$total.' to another account first.'], 'status' => 422], 422);
-                    }else{
+                    if ($total > 0) {
+                        return response()->json(['response' => null, 'error' => ['message' => "Account is not empty. You need to transfer $total to another account first."], 'status' => 422], 422);
+                    } else {
                         $toDestroy->active = false;
                         $toDestroy->updated_at = now();
                         $toDestroy->save();
-                        return response()->json(['response' => ['data'=>null,'message'=>'Account canceled.'], 'error' => null, 'status' => 200], 200);
+                        return response()->json(['response' => ['data' => null, 'message' => 'Account canceled.'], 'error' => null, 'status' => 200], 200);
 
                     }
                 }
