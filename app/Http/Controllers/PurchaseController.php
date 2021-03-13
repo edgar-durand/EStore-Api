@@ -155,7 +155,7 @@ class PurchaseController extends Controller
 
                     $movement = Movement::find($current_purchase->movement_id);
                     $movement->updated_at = now();
-                    git$movement->save();
+                    $movement->save();
 
                     $updatedProduct = Product::find($purchase['product_id']);
 
