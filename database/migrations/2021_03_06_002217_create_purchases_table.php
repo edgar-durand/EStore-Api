@@ -19,6 +19,7 @@ class CreatePurchasesTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('account_id');
             $table->unsignedBigInteger('movement_id');
+            $table->unsignedBigInteger('quantity');
             $table->float('total');
             $table->boolean('confirmed')->nullable();
             $table->timestamps();

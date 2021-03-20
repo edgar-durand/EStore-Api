@@ -51,7 +51,7 @@ class CreateUsersTable extends Migration
             'last_name'=>'Durand Diaz',
             'password' => '$2y$10$EMNGt/PaCGwUVoh1ZJUhJOE1H.6aymd8DJ0.97WbcQWpzjeQcaeBC'
         ]);
-        factory(User::class)->times(1000)->create();
+//        factory(User::class)->times(1000)->create();
     }
 
     /**

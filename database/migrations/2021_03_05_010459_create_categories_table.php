@@ -21,7 +21,30 @@ class CreateCategoriesTable extends Migration
             $table->timestamps();
         });
 
-        factory(Category::class)->times(5)->create();
+        Category::create([
+            'name'=>'Tools',
+            'description'=>'tools'
+        ]);
+        Category::create([
+            'name'=>'Home Utils',
+            'description'=>'home utils'
+        ]);
+        Category::create([
+            'name'=>'Electronic',
+            'description'=>'electronic'
+        ]);
+        Category::create([
+            'name'=>'Computer components',
+            'description'=>'PC items'
+        ]);
+        Category::create([
+            'name'=>'Wood' ,
+            'description'=>'woods jobs'
+        ]);
+        Category::create([
+            'name'=>'Food',
+            'description'=>'food, candies, etc.'
+        ]);
     }
 
     /**

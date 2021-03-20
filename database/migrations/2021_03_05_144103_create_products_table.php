@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->text('image')->nullable();
+            $table->longText('image')->nullable();
             $table->string('description')->nullable();
             $table->float('price_cost');
             $table->float('sales_price');
@@ -35,7 +35,7 @@ class CreateProductsTable extends Migration
             $table->timestamps();
         });
 
-        factory(Product::class)->times(1000)->create();
+//        factory(Product::class)->times(1000)->create();
 
 //        Schema::create('product_user', function (Blueprint $table) {//
 //            $table->unsignedBigInteger('user_id');

@@ -27,7 +27,7 @@ class CreateAccountsTable extends Migration
             $table->timestamps();
         });
 
-        factory(Account::class)->times(1000)->create();
+//        factory(Account::class)->times(1000)->create();
 
     }
 

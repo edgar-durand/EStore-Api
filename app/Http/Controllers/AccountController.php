@@ -32,7 +32,7 @@ class AccountController extends Controller
 
                 foreach ($movements as $movement) {
 //                    if ($movement->concepto_id === 1 || $movement->concepto_id === 3)
-                        $total += $movement->amount;
+                    $total += $movement->amount;
 //                    if ($movement->concepto_id === 2) {
 //                        $purchases = Purchase::all()
 //                            ->where('account_id', $movement['account_id'])
@@ -108,8 +108,8 @@ class AccountController extends Controller
         $movements = Movement::all()
             ->where('user_id', auth()->id())
             ->where('account_id', $account);
-
         $record = [];
+
         foreach ($movements as $movement) {
             $concept = Concepto::find($movement->concepto_id);
             switch ($concept->id) {
@@ -127,7 +127,7 @@ class AccountController extends Controller
                     {
 
                         $purchases = Purchase::all()
-                            ->where('account_id', $movement['account_id'])
+                            ->where('account_id', $account)
                             ->where('movement_id', $movement['id']);
                         $amount = 0;
                         $confirmed = 0;
@@ -262,5 +262,55 @@ class AccountController extends Controller
         }
         return response()->json(['response' => null, 'error' => ['message' => 'Account ID: ' . $account . ' Not Found.'], 'status' => 404], 404);
 
+    }
+
+    public function getLoans($account)
+    {
+        $outgoing = 0;
+        $incoming = 0;
+        $loans = 0;
+        $movements = Movement::from('movements as m')
+            ->where('m.account_id', $account)
+            ->where('m.user_id', auth()->id())
+            ->get();
+        if ($movements->count()) {
+            foreach ($movements as $movement) {
+                if ($movement->concepto_id === 2) $outgoing += $movement->amount;
+                if ($movement->concepto_id === 3) $incoming += $movement->amount;
+            }
+            $loans = $incoming + $outgoing;
+            return response()->json(['response' => ['data' => [
+                'outgoing' => $outgoing,
+                'incoming' => $incoming,
+                'loans' => $loans
+            ], 'message' => "Loans for account id $account"], 'error' => null, 'status' => 200], 200);
+        }
+        return response()->json(['response' => null, 'error' => ['message' => 'Account id not found or unauthorized.'], 'status' => 404], 404);
+
+
+    }
+
+    public function getAllLoans()
+    {
+        $outgoing = 0;
+        $incoming = 0;
+        $loans = [];
+        foreach (Account::whereUser_id(auth()->id())
+                     ->get() as $account) {
+            $movements = Movement::from('movements as m')
+                ->where('m.account_id', $account->id)
+                ->get();
+            foreach ($movements as $movement)
+            if ($movement->count()) {
+                if ($movement->concepto_id === 3) $incoming += $movement->amount;
+                if ($movement->concepto_id === 2) $outgoing += $movement->amount;
+            }
+            $loans[ ]=[
+                'outgoing' => $outgoing,
+                'incoming' => $incoming,
+                'loans' => $incoming + $outgoing
+            ];
+        }
+        return response()->json(['response' => ['data' => $loans , 'message' => "Loans for all accounts"], 'error' => null, 'status' => 200], 200);
     }
 }

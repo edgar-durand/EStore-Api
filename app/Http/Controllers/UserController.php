@@ -157,7 +157,7 @@ class UserController extends Controller
 
         $user = User::whereEmail($request->email)->first();
         if (!is_null($user) && Hash::check($request->password, $user->password)) {
-            if (!is_null($user->api_token)) {
+            if ($user->api_token !== null) {
                 return response()->json(['response' => ['data' => ['token' => $user->api_token], 'message' => 'You were authenticated !'], 'error' => null, 'status' => 200], 200);
             } else {
                 $user->api_token = Str::random(50);

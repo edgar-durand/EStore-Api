@@ -37,7 +37,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::apiResource('/concept','ConceptoController');
 
-    Route::apiResource('/account','AccountController');
+    Route::get('/account/all_loans','AccountController@getAllLoans');
+    Route::apiResource('/account','AccountController')->except(['getLoans']);
+    Route::get('/account/loans/{account_id}','AccountController@getLoans');
 
     Route::post('/purchase','PurchaseController@store');
     Route::post('/purchase/confirm','PurchaseController@confirm');
