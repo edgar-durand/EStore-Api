@@ -133,8 +133,8 @@ class PurchaseController extends Controller
 
             }
         return !is_null($Results) ?
-            response()->json(['response' => ['data' => $Results, 'message' => 'Pending request.'], 'error' => null, 'status' => 200], 200) :
-            response()->json(['response' => ['data' => null, 'message' => 'No purchases request.'], 'error' => null, 'status' => 200], 200);
+            response()->json(['response' => ['data' => $Results, 'message' => 'Pending sales request.'], 'error' => null, 'status' => 200], 200) :
+            response()->json(['response' => ['data' => null, 'message' => 'No sales request.'], 'error' => null, 'status' => 200], 200);
     }
 
     public function confirm(Request $request)
